@@ -16,7 +16,8 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/ejercicio1">Ejercicio 1</RouterLink>
         <RouterLink to="/ejercicio2">Ejercicio 2</RouterLink>
         <RouterLink to="/ejercicio3">Ejercicio 3</RouterLink>
-
+        <RouterLink to="/ejercicio4">Ejercicio 4</RouterLink>
+        <RouterLink to="/ejercicio5">Ejercicio 5</RouterLink>
       </nav>
     </div>
   </header>

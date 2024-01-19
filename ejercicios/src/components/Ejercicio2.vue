@@ -8,7 +8,7 @@
             <li v-for="tarea in tareas" :key="tarea.id">{{ tarea.texto }}</li>
         </ul>
         <p v-else>No Hay Tareas</p>
-
+        <p >{{numeroTareas}}</p>
     </div>
 </template>
 
@@ -18,8 +18,10 @@ export default {
     data() {
         return {
             // sinTareas: 'No hay tareas',
+            
             nuevaTarea: '',
-            tareas: []
+            tareas: [],
+            numeroTareas: 0,
         }
     },
     methods: {
@@ -29,7 +31,7 @@ export default {
                     texto: this.nuevaTarea
                 });
                 this.nuevaTarea = '';
-            
+                this.numeroTareas= this.tareas.length;
         }
     }
 }

@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue'
-import Ejercicio1 from '../components/Ejercicio1.vue'
+import Ejercicio1 from '../components/Ejercicio1.vue';
 import Ejercicio2 from '../components/Ejercicio2.vue';
 import Ejercicio3 from '../components/Ejercicio3.vue';
+import Ejercicio4 from '../components/Ejercicio4.vue';
+import Ejercicio5 from '../components/Ejercicio5.vue';
 
 
 const router = createRouter({
@@ -35,6 +37,16 @@ const router = createRouter({
       path: '/ejercicio3',
       name: 'ejercicio3',
       component: Ejercicio3
+    },
+    {
+      path: '/ejercicio4',
+      name: 'ejercicio4',
+      component: Ejercicio4
+    },
+    {
+      path: '/ejercicio5',
+      name: 'ejercicio5',
+      component: Ejercicio5
     }
     
   ]
