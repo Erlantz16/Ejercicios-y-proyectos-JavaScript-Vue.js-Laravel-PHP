@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Pokemon from '../components/Pokemon.vue'
-import Ejercicio3 from '../components/Ejercicio3.vue'
+import ejercicio from '../components/ejercicio.vue'
 
 
 const router = createRouter({
@@ -13,14 +12,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/pokemon',
-      name: 'pokemon',
-      component: Pokemon
-    },
-    {
-      path: '/ejercicio3',
-      name: 'ejercicio3',
-      component: Ejercicio3
+      path: '/ejercicio',
+      name: 'ejercicio',
+      component: ejercicio
     },
     {
       path: '/about',

@@ -24,12 +24,13 @@
       </tbody>
     </table>
 
-    <input type="text" v-model="newPokemon.name" />
-    <input type="text" v-model="newPokemon.type" />
-    <input type="text" v-model="newPokemon.ability" />
-    <button @click="addPokemon()">Add</button>
+    <input type="text" v-model="newPokemon.name" placeholder="Name" />
+    <input type="text" v-model="newPokemon.type" placeholder="Type" />
+    <input type="text" v-model="newPokemon.ability" placeholder="Ability" />
+    <button @click="addPokemon">Add</button>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 
@@ -38,7 +39,11 @@ export default {
     return {
       pokemons: [],
       selectedType: "",
-      newPokemon: ["", "", ""],
+      newPokemon: {
+        name: "",
+        type: "",
+        ability: "",
+      },
     };
   },
   created() {
@@ -53,11 +58,7 @@ export default {
   },
   computed: {
     uniqueTypes() {
-      const types = new Set();
-      this.pokemons.forEach((pokemon) => {
-        types.add(pokemon.type);
-      });
-      return Array.from(types);
+      return [...new Set(this.pokemons.map((pokemon) => pokemon.type))];
     },
     filteredPokemons() {
       if (this.selectedType === "") {

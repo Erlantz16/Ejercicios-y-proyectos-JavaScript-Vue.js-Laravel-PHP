@@ -1,0 +1,85 @@
+<template>
+  <h1>Aqui montamos el examen</h1>
+  <h2>Examen minimos 2DW3D</h2>
+  <div>
+    <label for="nombre">Nombre: </label>
+    <input v-model="persona.nombre" @blur="comprobarNombre" name="nombre" type="text" /><br />
+    <label for="email">Email: </label>
+    <input v-model="persona.email" @blur="comprobarEmail" name="email" type="email" /><br />
+    <p v-if="!comrpEmail && emailValidado">Email incorrecto</p>
+    <label for="password">Password: </label>
+    <input v-model="persona.password" @keyup="comprobarContrasena" name="password" type="password" /><br />
+    <p v-if="!comprPassword && passwordValidado">Contraseña incorrecta</p>
+    <p v-if="!comprNombre && nombreValidado">Nombre incorrecto</p>
+    <button v-if="comprPassword && comrpEmail && comprNombre" @click="añadir()">Añadir</button>
+  </div>
+  <ul>
+    <li v-for="(persona, index) in personas" :key="index">
+      <strong>Nombre:</strong> {{ persona.nombre }}<br>
+      <strong>Email:</strong> {{ persona.email }}<br>
+      <strong>Password:</strong> {{ persona.password }}
+      <button @click="eliminar(index)">Eliminar</button>
+    </li> 
+  </ul>
+</template>
+<script>
+export default {
+  name: "ejercicio",
+  data() {
+    return {
+      comrpEmail: false,
+      comprPassword: false,
+      comprNombre: false,
+
+
+      persona: {
+        nombre: "",
+        email: "",
+        password: "",
+      },
+      personas:[],
+    };
+  },
+  computed: {
+    mostrarBoton() {
+      return (
+        this.persona.email !== "" &&
+        this.persona.password !== "" &&
+        this.persona.nombre !== ""
+      );
+    },
+  },
+  methods: {
+    comprobarEmail() {
+      const emailRegExr = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      this.comrpEmail = emailRegExr.test(this.persona.email);
+      this.emailValidado = true;
+    },
+    comprobarContrasena() {
+      const passwordRegExr = /^.{8,}$/;
+      this.comprPassword = passwordRegExr.test(this.persona.password);
+      this.passwordValidado = true;
+    },
+    comprobarNombre() {
+      this.comprNombre = this.persona.nombre.trim() !== "";
+      this.nombreValidado = true;
+    },
+    añadir() {
+    
+      this.personas.push(this.persona);
+      this.persona = {
+        nombre: "",
+        email: "",
+        password: "",
+      };
+      document.getElementsByTagName("button")[0].style.display = "none";
+  
+      
+    },
+    eliminar(index){
+      this.personas.splice(index,1);
+    }
+  },
+
+};
+</script>
