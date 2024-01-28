@@ -30,9 +30,13 @@ export default {
     methods: {
         login(event) {
             event.preventDefault();
+            // bucle para recorrer el array de usuarios
             for (let i = 0; i < this.usuarios.length; i++) {
+                // condicional para comprobar si el usuario existe
                 if (this.usuarios[i].name === this.name) {
+                    // condicional para comprobar si la contraseña es correcta
                     if (this.usuarios[i].password === this.contrasena) {
+                        // almacenar el nombre del usuario en el sessionStorage
                         sessionStorage.setItem('usuario', this.usuarios[i].name);
                         window.location.href = '/compras';
                         console.log("login correcto");
