@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('alumno_curso', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('curso_id');
+
+            $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade');
+
+            $table->unsignedBigInteger('alumno_id');
+
+            $table->foreign('alumno_id')->references('id')->on('alumnos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,3 +32,4 @@ return new class extends Migration
         Schema::dropIfExists('alumno_curso');
     }
 };
+//php artisa

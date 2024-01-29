@@ -1,118 +1,121 @@
 <template>
+  <div>
+    <h1>Has entrado como {{ usuarioentrante }}</h1>
+    <div class="productos">
+      <h2>Productos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(producto, index) in productos" :key="index">
+            <td>{{ producto.title }}</td>
+            <td>{{ producto.description }}</td>
+            <td>{{ producto.price }}</td>
+            <td>{{ producto.stock }}</td>
+
+            <td><button @click="añadirAlCarrito(index)">Añadir</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    -----------------------------------------------------------------
+
     <div>
-      <h1>Has entrado como {{ usuarioentrante }}</h1>
-      <div class="productos">
-        <h2>Productos</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Stock</th>
-              <th>Precio</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(producto, index) in productos" :key="index">
-              <td>{{ producto.title }}</td>
-              <td>{{ producto.description }}</td>
-              <td>{{ producto.price }}</td>
-              <td>{{ producto.stock }}</td>
+      <h2>Carrito</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Stock</th>
+            <th>Unidades Compradas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(producto, index) in carrito" :key="index">
+            <td>{{ producto.title }}</td>
+            <td>{{ producto.price }}</td>
 
-              <td><button @click="añadirAlCarrito(index)">Añadir</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      -----------------------------------------------------------------
+            <td>{{ producto.unidadesCompradas }}</td>
+          </tr>
 
-      <div>
-        <h2>Carrito</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Stock</th>
-              <th>Unidades Compradas</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(producto, index) in carrito" :key="index">
-              <td>{{ producto.title }}</td>
-              <td>{{ producto.price }}</td>
+        </tbody>
+        Total: {{ totalPrice }}
 
-              <td>{{ producto.unidadesCompradas }}</td>
-            </tr>
-
-          </tbody>
-          Total:  {{ totalPrice}}
-
-        </table>
-      </div>
+      </table>
     </div>
+  </div>
 
 
-    <div class="cantidad">
-      
-       
-    
-    </div>
-  </template>
+  <div class="cantidad">
+
+
+
+  </div>
+</template>
   
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    name: 'comprasView',
-    data() {
-      return {
-        productos: [],
-        carrito: [],
-        usuarioentrante: '',
-      };
-    },
-    mounted() {
-      this.usuarioentrante = sessionStorage.getItem('usuario');
-      axios
-        .get('/public/json/products.json')
-        .then((response) => {
-          this.productos = response.data.products;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-     // ...
-     computed: {
-  unidadesCompradas() {
-    let total = 0;
-    for (let i = 0; i < this.carrito.length; i++) {
-      total += this.carrito[i].unidadesCompradas;
-    }
-    return total;
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'comprasView',
+  data() {
+    return {
+      productos: [],
+      carrito: [],
+      usuarioentrante: '',
+    };
   },
-  totalPrice() {
-    let total = 0;
-    for (let i = 0; i < this.carrito.length; i++) {
-      total += this.carrito[i].price * this.carrito[i].unidadesCompradas;
-    }
-    return total;
+  mounted() {
+    this.usuarioentrante = sessionStorage.getItem('usuario');
+    axios
+      .get('/public/json/products.json')
+      .then((response) => {
+        this.productos = response.data.products;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   },
-},
-    methods: {
-      añadirAlCarrito(index) {
-        const productoSeleccionado = this.productos[index];
-        for (let i = 0; i < this.carrito.length; i++) {
-          if (this.carrito[i].title === productoSeleccionado.title) {
-    productoEnCarrito = this.carrito[i];
-    break;
-  }
+  // ...
+  computed: {
+    unidadesCompradas() {
+      let total = 0;
+      for (let i = 0; i < this.carrito.length; i++) {
+        total += this.carrito[i].unidadesCompradas;
+      }
+      return total;
+    },
+    totalPrice() {
+      let total = 0;
+      for (let i = 0; i < this.carrito.length; i++) {
+        total += this.carrito[i].price * this.carrito[i].unidadesCompradas;
+      }
+      return total;
+    },
+  },
+  methods: {
+    añadirAlCarrito(index) {
+      // productoSeleccionado es el producto que se ha seleccionado
+      const productoSeleccionado = this.productos[index];
+      // productoEnCarrito es el producto que ya está en el carrito
+      for (let i = 0; i < this.carrito.length; i++) {
+        // Si el producto que está en el carrito es el mismo que el que se ha seleccionado
+        if (this.carrito[i].title === productoSeleccionado.title) {
+          productoEnCarrito = this.carrito[i];
+          break;
+        }
         this.carrito.push({
           title: this.productos[index].title,
           price: productoSeleccionado.price,
           unidadesCompradas: 1,
-               }); 
+        });
       }
     },
   },
@@ -131,5 +134,5 @@
 
   //   carritoItem.unidadesCompradas++;
   // },
-  };
-  </script>
+};
+</script>
