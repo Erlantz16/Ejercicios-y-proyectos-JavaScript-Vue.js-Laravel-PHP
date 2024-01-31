@@ -19,7 +19,7 @@
           <td>{{ pokemon.ability }}</td>
           <td>
             <button @click="deletePokemon(index)">Delete</button>
-          </td>
+          </td>x 
         </tr>
       </tbody>
     </table>
@@ -39,11 +39,6 @@ export default {
     return {
       pokemons: [],
       selectedType: "",
-      newPokemon: {
-        name: "",
-        type: "",
-        ability: "",
-      },
     };
   },
   created() {

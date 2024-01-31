@@ -8,8 +8,10 @@
 </template>
 <script>
 import axios from 'axios';
+
 export default {
     name: 'LoginView',
+    
     data() {
         return {
             user: {
@@ -30,22 +32,17 @@ export default {
                 });
     },
     methods: {
-        login(event) {
-            event.preventDefault();
-            for (let i = 0; i < this.user.length; i++) {
-                if (this.user[i].name === this.user.name) {
-                    if (this.user[i].password === this.user.password) {
-                        sessionStorage.setItem('user', this.user[i].name);
-                        window.location.href = '/comprasview';
-                        console.log("login correcto");
-                        break;
-                    } else {
-                        console.log("contraseña incorrecta");
-                    }
-                }
-            }
-         
+        //funcion para comprobar que los datos del formulario coinciden con algun usuario del json y me lleve a comprasview
+       login(event){
+        event.preventDefault();
+        if(this.user.name == this.user.name && this.user.password == this.user.password){
+            sessionStorage.setItem('user', this.user.name);
+            window.alert("Bienvenido " + this.user.name);
+            window.location.href = '/comprasview';
+        }else{
+            window.alert("Usuario o contraseña incorrectos");
         }
+       }
     }
 };
 </script>
