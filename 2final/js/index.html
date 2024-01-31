@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Números Aleatorios</title>
+</head>
+<body>
+    <h2>Generador de Números Aleatorios</h2>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre"><br>
+    <label for="cantidad">Cantidad de números:</label>
+    <input type="number" id="cantidad" value="6"><br>
+    <label for="limite">Límite superior:</label>
+    <input type="number" id="limite" value="50"><br>
+    <button onclick="generarNumerosAleatorios()">Generar Números</button>
+    <h3>Números Aleatorios:</h3>
+    <ul id="numerosAleatorios"></ul>
+
+    <script>
+        class Persona {
+            constructor(nombre = '') {
+                this.nombre = nombre;
+                this.numeros = new Set();
+            }
+
+            getNombre() {
+                return this.nombre;
+            }
+
+            setNombre(nombre) {
+                this.nombre = nombre;
+            }
+
+            ingresarNumero(numero) {
+                this.numeros.add(numero);
+            }
+        }
+
+        function generarNumerosAleatorios() {
+            const nombreInput = document.getElementById('nombre');
+            const cantidadInput = document.getElementById('cantidad');
+            const limiteInput = document.getElementById('limite');
+
+            const nombre = nombreInput.value.trim();
+            const cantidad = parseInt(cantidadInput.value);
+            const limite = parseInt(limiteInput.value);
+
+            // Verificar si el nombre está ingresado
+            if (nombre === '') {
+                alert('Por favor, ingrese un nombre.');
+                return;
+            }
+            if(limite<cantidad){
+                alert('El limite debe ser mayor que la cantidad de numeros');
+                return;
+            }
+
+            const persona = new Persona(nombre);
+
+            while (persona.numeros.size < cantidad) {
+                const numero = Math.floor(Math.random() * (limite + 1));
+                persona.ingresarNumero(numero);
+            }
+
+            mostrarNumeros(persona);
+        }
+
+        function mostrarNumeros(persona) {
+            const listaNumeros = document.getElementById('numerosAleatorios');
+            listaNumeros.innerHTML = '';
+
+            persona.numeros.forEach(numero => {
+                const listItem = document.createElement('li');
+                listItem.textContent = numero;
+                listaNumeros.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
