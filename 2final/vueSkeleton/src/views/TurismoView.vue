@@ -41,6 +41,7 @@
 <script>
 import axios from 'axios';
 
+
 export default {
   name: 'TurismoView',
   data () {
@@ -48,6 +49,7 @@ export default {
         turismo: [],
         selectedMonth: '',
         selectedPlace: '',
+        sitios: ['Bizkaia', 'Gipuzkoa', 'Araba'],
         months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         
     }
@@ -56,46 +58,45 @@ export default {
 
   },
   computed: {
-    sitios() {
-      return [...new Set(this.turismo.map((dato) => dato.territory))];
+    // sitios() {
+    //   return [...new Set(this.turismo.map((dato) => dato.territory))];
 
-    },
+    // },
     
     filteredMonth() {
         return this.turismo
             .filter(dato => {
-                if (this.selectedMonth === '') {
+                // if (this.selectedMonth === '') {
+                //     return true;
+                // } else {
+                //     let date = new Date(dato.eventStartDate.split('/').reverse().join('-'));
+                //     let monthIndex = this.months.indexOf(this.selectedMonth);
+                //     return date.getMonth() === monthIndex;
+                // }
+
+
+                if (this.selectedMonth === ''){
+                    //return this.turismo;
                     return true;
-                } else {
-                    let date = new Date(dato.eventStartDate.split('/').reverse().join('-'));
-                    let monthIndex = this.months.indexOf(this.selectedMonth);
-                    return date.getMonth() === monthIndex;
+                }else{
+                    let mes = dato.eventStartDate.split('/')[1];
+                    let mesIndex = this.months.indexOf(this.selectedMonth);
+                    return mes == mesIndex;
+
                 }
             })
             .filter(dato => {
                 if (this.selectedPlace === '') {
                     return this.turismo;
                 } else {
-                    return dato.territory === this.selectedPlace;
+                    return dato.territory.includes(this.selectedPlace);
+                    // return dato.territory === this.selectedPlace;
                 }
             });
 
-    },
-    filteredPlace() {
-        if (this.selectedPlace === '') {
-        return this.turismo;
-    } else {
-        console.log(this.selectedPlace);
-
-        return this.turismo.filter(
-            dato => { return dato.territory === this.selectedPlace;
-        });
-
-    }
-    },
-    
+    },  
   },
-  created () {
+  mounted () {
     axios
         .get('/json/agenda.json')
         .then(response => {
