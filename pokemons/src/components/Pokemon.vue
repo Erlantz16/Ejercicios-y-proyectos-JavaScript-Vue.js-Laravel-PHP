@@ -13,13 +13,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(pokemon, index) in filteredPokemons" :key="pokemon.name">
+        <tr v-for="(pokemon , index) in filteredPokemons" :key="pokemon.name">
           <td>{{ pokemon.name }}</td>
           <td>{{ pokemon.type }}</td>
           <td>{{ pokemon.ability }}</td>
           <td>
-            <button @click="deletePokemon(index)">Delete</button>
-          </td>x 
+            <button @click="deletePokemon(pokemon)">Delete</button>
+          </td> 
         </tr>
       </tbody>
     </table>
@@ -28,6 +28,8 @@
     <input type="text" v-model="newPokemon.type" placeholder="Type" />
     <input type="text" v-model="newPokemon.ability" placeholder="Ability" />
     <button @click="addPokemon">Add</button>
+    
+
   </div>
 </template>
 
@@ -35,12 +37,20 @@
 import axios from "axios";
 
 export default {
+  name: "Pokemon",
   data() {
     return {
+      newPokemon: {
+        name: "",
+        type: "",
+        ability: "",
+      },
       pokemons: [],
       selectedType: "",
     };
   },
+  
+ 
   created() {
     axios
       .get("/pokemons.json")
@@ -66,9 +76,11 @@ export default {
     },
   },
   methods: {
-    deletePokemon(index) {
-      this.pokemons.splice(index, 1);
-    },
+    deletePokemon(pokemon) {
+      const index = this.pokemons.indexOf(pokemon);
+        if (index !== -1) {
+            this.pokemons.splice(index, 1);
+        }    },
     addPokemon() {
       this.pokemons.push(this.newPokemon);
       this.newPokemon = {
