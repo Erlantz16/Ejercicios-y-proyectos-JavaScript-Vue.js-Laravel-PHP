@@ -32,16 +32,21 @@
           <td>{{ dato.documentDescription }}</td>
           <!-- <td>{{ dato.ability }}</td> -->
           <td>{{dato.friendlyUrl}}</td>
+          <button @click="añadirFavoritor(index)" >Añadir a favoritos</button>
         </tr>
       </tbody>
     </table>
 </div>
-
+<div>
+    <ul v-for="favoritos in favorito">
+        <li>{{favoritos.documentName}}</li>
+    </ul>
+</div>
 </template>
 <script>
 import axios from 'axios';
-
-
+import { mapState, mapActions } from 'pinia'
+import {useCounterStore} from '@/stores/counter'
 export default {
   name: 'TurismoView',
   data () {
@@ -55,9 +60,25 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useCounterStore, ['añadir']),
 
+
+    añadirFavoritor(index){
+        let añade = true
+        for(let i = 0; i < this.favorito.length; i++){
+            if(this.favorito[i].documentName == this.turismo[index].documentName){
+                 añade = false;
+               alert("Ya esta en favoritos");
+            }
+        }
+        if(añade){
+            this.añadir(this.turismo[index])
+        }
+            // this.$store.commit('añadirFavorito', this.filteredMonth[index]);
+    }
   },
   computed: {
+    ...mapState(useCounterStore, ['favorito']),
     // sitios() {
     //   return [...new Set(this.turismo.map((dato) => dato.territory))];
 
