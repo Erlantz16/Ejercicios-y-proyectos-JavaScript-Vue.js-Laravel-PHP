@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Has entrado como {{ usuarioentrante || 'Invitado' }}</h1>    
+      <p>Compra de : {{ this.nombreUsuario }}</p>
     <div class="productos">
       <h2>Productos</h2>
       <table>
@@ -62,6 +62,8 @@
   
 <script>
 import axios from 'axios';
+import { useCounterStore } from '@/stores/counter.js'; // Asegúrate de que la ruta de importación es correcta
+import { mapActions, mapState } from 'pinia';
 
 export default {
   name: 'comprasView',
@@ -71,6 +73,9 @@ export default {
       carrito: [],
       usuarioentrante: '',
     };
+  },
+  computed : {
+    ...mapState(useCounterStore, ['nombreUsuario']),
   },
   mounted() {
     this.usuarioentrante = sessionStorage.getItem('usuario');

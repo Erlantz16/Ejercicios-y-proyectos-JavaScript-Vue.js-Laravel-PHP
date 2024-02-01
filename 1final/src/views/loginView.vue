@@ -12,6 +12,8 @@
   
 <script>
 import axios from 'axios';
+import { useCounterStore } from '@/stores/counter.js'; // Asegúrate de que la ruta de importación es correcta
+import { mapActions, mapState} from 'pinia';
 
 export default {
     name: 'loginView',
@@ -28,17 +30,22 @@ export default {
         }
     },
     methods: {
+
+        ...mapActions(useCounterStore, ['añadir']),
         login(event) {
             event.preventDefault();
+            // const counterStore = useCounterStore(); // Inicializa el store
+
             // bucle para recorrer el array de usuarios
             for (let i = 0; i < this.usuarios.length; i++) {
                 // condicional para comprobar si el usuario existe
                 if (this.usuarios[i].name === this.name) {
                     // condicional para comprobar si la contraseña es correcta
                     if (this.usuarios[i].password === this.contrasena) {
-                        // almacenar el nombre del usuario en el sessionStorage
-                        sessionStorage.setItem('usuario', this.usuarios[i].name);
-                        window.location.href = '/compras';
+                        // almacenar el nombre del usuario en el store
+                        this.añadir(this.usuarios[i].name);
+                        this.$router.push('/compras');
+
                         console.log("login correcto");
                         break;
                     } else {
@@ -48,6 +55,26 @@ export default {
             }
         }
     },
+    // methods: {
+    //     login(event) {
+    //         event.preventDefault();
+    //         // bucle para recorrer el array de usuarios
+    //         for (let i = 0; i < this.usuarios.length; i++) {
+    //             // condicional para comprobar si el usuario existe
+    //             if (this.usuarios[i].name === this.name) {
+    //                 // condicional para comprobar si la contraseña es correcta
+    //                 if (this.usuarios[i].password === this.contrasena) {
+    //                     // almacenar el nombre del usuario en el sessionStorage
+                        
+    //                     console.log("login correcto");
+    //                     break;
+    //                 } else {
+    //                     console.log("contraseña incorrecta");
+    //                 }
+    //             }
+    //         }
+    //     }
+    // },
     mounted() {
         axios.get('/public/json/Usuarios.json')
             .then(response => {

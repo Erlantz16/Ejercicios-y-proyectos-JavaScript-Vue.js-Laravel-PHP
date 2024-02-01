@@ -21,8 +21,8 @@ export const useCounterStore = defineStore('counter', {
     añadir(turismo){
       this.favorito.push(turismo);
     },
-    eliminar(turismo){
-      this.favorito.splice(this.favorito.indexOf(turismo),1);
+    eliminar(index){
+      this.favorito.splice(this.favorito.indexOf(index), 1);
     }
     // incrementar() {
     //   this.contador++

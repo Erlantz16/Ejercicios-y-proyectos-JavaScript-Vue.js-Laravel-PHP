@@ -32,7 +32,7 @@
           <td>{{ dato.documentDescription }}</td>
           <!-- <td>{{ dato.ability }}</td> -->
           <td>{{dato.friendlyUrl}}</td>
-          <button @click="añadirFavoritor(index)" >Añadir a favoritos</button>
+          <button @click="añadirFavorito(index)" >Añadir a favoritos</button>
         </tr>
       </tbody>
     </table>
@@ -61,9 +61,7 @@ export default {
   },
   methods: {
     ...mapActions(useCounterStore, ['añadir']),
-
-
-    añadirFavoritor(index){
+    añadirFavorito(index){
         let añade = true
         for(let i = 0; i < this.favorito.length; i++){
             if(this.favorito[i].documentName == this.turismo[index].documentName){
