@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>¡Bienvenido al juego de los Goya 2023!</h2>
+    <input disabled="disabled" id="pelicula" size="50">
+    <select id="premios">
+      <option value="0">Mejor película</option>
+      <option value="1">Mejor película de animación</option>
+      <option value="2">Mejor película documental</option>
+      <option value="3">Cortometraje documental</option>
+      <option value="4">Cortometraje de animación</option>
+      <option value="5">Cortometraje de ficción</option>
+    </select>
+    <button id="boton">Comprobar</button>
+    <h3 id="mensaje"></h3>
+  </body>
+    <script>
+      //Aquí va la clase PeliculaPremio
+    
+      //Arrays de películas y premios
+      //Cada película y premio se corresponden uno a uno: 
+      //As bestas con Mejor película, Unicorn war con Mejor película de animación, etc.
+      const peliculas = [
+        "As bestas",
+        "Unicorn war",
+        "Labordeta, un hombre sin más",
+        "Maldita",
+        "The loop",
+      ];
+
+      const premios = [
+        "Mejor película",
+        "Mejor película de animación",
+        "Mejor película documental",
+        "Cortometraje documental",
+        "Cortometraje de animación",
+      ];
+
+     
+      //Script de la aplicación
+
+      //en el input mostrar aleatoriamente una película del array peliculas
+      this.document.getElementById("pelicula").value = peliculas[Math.floor(Math.random() * peliculas.length)];
+      //añadir funcion onclick al boton
+      this.document.getElementById("boton").onclick = function(){
+
+        //recoger el valor del select
+        let premio = document.getElementById("premios");
+        //recoger el valor del input
+        let pelicula = document.getElementById("pelicula");
+        //mostrar aleatorio una pelicula del array peliculas
+        pelicula.value = peliculas[Math.floor(Math.random() * peliculas.length)];
+        //si la posicion de la pelicula  y el valor del select es el mismo-> correcto
+
+        //coger el dato del valor del select
+        let premioVerdadero = premio.options[premio.selectedIndex].text;        
+        console.log(premioVerdadero);
+
+        const peliculasPremios = {
+        pelicula: pelicula.value,
+        premio: premioVerdadero,
+      };
+        
+        if(peliculas.indexOf(pelicula.value) == premio.value){
+          document.getElementById("mensaje").innerHTML = "¡Correcto!";
+          document.getElementById("mensaje").innerHTML = "La pelicula " + peliculasPremios.pelicula + " ha ganado el premio " + peliculasPremios.premio + " ¡Enhorabuena!";
+
+        }else{
+          document.getElementById("mensaje").innerHTML = "¡Incorrecto!";
+          }
+        }
+        
+       
+    
+    </script>
+  </body>
+</html>

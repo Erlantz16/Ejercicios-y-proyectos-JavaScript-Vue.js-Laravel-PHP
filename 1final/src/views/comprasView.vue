@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Has entrado como {{ usuarioentrante }}</h1>
+    <h1>Has entrado como {{ usuarioentrante || 'Invitado' }}</h1>    
     <div class="productos">
       <h2>Productos</h2>
       <table>
@@ -75,7 +75,7 @@ export default {
   mounted() {
     this.usuarioentrante = sessionStorage.getItem('usuario');
     axios
-      .get('/public/json/products.json')
+      .get('/json/products.json')
       .then((response) => {
         this.productos = response.data.products;
       })
@@ -83,42 +83,40 @@ export default {
         console.error(error);
       });
   },
-  // ...
-  computed: {
-    unidadesCompradas() {
-      let total = 0;
-      for (let i = 0; i < this.carrito.length; i++) {
-        total += this.carrito[i].unidadesCompradas;
-      }
-      return total;
-    },
-    totalPrice() {
-      let total = 0;
-      for (let i = 0; i < this.carrito.length; i++) {
-        total += this.carrito[i].price * this.carrito[i].unidadesCompradas;
-      }
-      return total;
-    },
-  },
+ 
   methods: {
     añadirAlCarrito(index) {
-      // productoSeleccionado es el producto que se ha seleccionado
-      const productoSeleccionado = this.productos[index];
-      // productoEnCarrito es el producto que ya está en el carrito
-      for (let i = 0; i < this.carrito.length; i++) {
-        // Si el producto que está en el carrito es el mismo que el que se ha seleccionado
-        if (this.carrito[i].title === productoSeleccionado.title) {
-          productoEnCarrito = this.carrito[i];
-          break;
-        }
+      let agregar = true
+      if(this.carrito == 0){
         this.carrito.push({
           title: this.productos[index].title,
-          price: productoSeleccionado.price,
+          price: this.productos[index].price,
           unidadesCompradas: 1,
         });
+      }else{
+        for(let i = 0; i < this.carrito.length; i++){
+          if(this.carrito[i].title == this.productos[index].title){
+            agregar = false
+
+            this.carrito[i].unidadesCompradas++;
+          }
+         
+        }
+        if(agregar){
+          this.carrito.push({
+            title: this.productos[index].title,
+            price: this.productos[index].price,
+            unidadesCompradas: 1,
+          });
+        }
       }
+
+    
     },
-  },
+    }
+    }
+  
+  
   //   añadirAlCarrito(index) {
   //   const producto = this.productos[index];
   //   let carritoItem = this.carrito.find(item => item.title === producto.title);
@@ -134,5 +132,5 @@ export default {
 
   //   carritoItem.unidadesCompradas++;
   // },
-};
+
 </script>
