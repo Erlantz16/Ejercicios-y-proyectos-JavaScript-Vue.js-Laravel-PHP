@@ -18,15 +18,18 @@ export const useCounterStore = defineStore('counter', {
   },
   //Las acciones modifican la propiedad contador del estado del almacén
   actions: {
+    añadir(turismo){
+      this.favorito.push(turismo);
+    },
+    eliminar(turismo){
+      this.favorito.splice(this.favorito.indexOf(turismo),1);
+    }
     // incrementar() {
     //   this.contador++
     // },
     // decrementar(){
     //   this.contador--
     // }
-    añadir(turismo){
-      this.favorito.push(turismo);
-    }
-
+    
   },
 })
