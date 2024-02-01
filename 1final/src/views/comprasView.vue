@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p>Compra de : {{ this.nombreUsuario }}</p>
+      <p> Compra de : {{ nombreInicioSesion }}</p>
     <div class="productos">
       <h2>Productos</h2>
       <table>
@@ -72,10 +72,21 @@ export default {
       productos: [],
       carrito: [],
       usuarioentrante: '',
+      nombreInicioSesion: '',
     };
   },
   computed : {
     ...mapState(useCounterStore, ['nombreUsuario']),
+    nombreInicioSesion(){
+      if (this.nombreUsuario == '') {
+        this.nombreInicioSesion = 'Invitado';
+      } else {
+        this.nombreInicioSesion = this.nombreUsuario;
+      }
+      return this.nombreInicioSesion;
+
+    },
+    
   },
   mounted() {
     this.usuarioentrante = sessionStorage.getItem('usuario');

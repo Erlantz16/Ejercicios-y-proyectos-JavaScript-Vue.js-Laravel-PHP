@@ -15,11 +15,22 @@
   </div>
   <ul>
     <li v-for="(persona, index) in personas" :key="index">
-      <strong>Nombre:</strong> {{ persona.nombre }}<br>
-      <strong>Email:</strong> {{ persona.email }}<br>
-      <strong>Password:</strong> {{ persona.password }}
+      <strong>Nombre:</strong>
+      <p v-if="!editando">{{ persona.nombre }}</p>
+      <input v-else v-model="persona.nombre" type="text" />
+      
+      <strong>Email:</strong>
+      <p v-if="!editando">{{ persona.email }}</p>
+      <input v-else v-model="persona.email" type="text" />
+      
+      <strong>Password:</strong>
+      <p v-if="!editando">{{ persona.password }}</p>
+      <input v-else v-model="persona.password" type="text" />
+
       <button @click="eliminar(index)">Eliminar</button>
-    </li> 
+      <button v-if="!editando" @click="activarEdicion">activarEdicion</button>
+      <button v-else @click="activarEdicion">desactivarEdicion</button>
+    </li>
   </ul>
 </template>
 <script>
@@ -30,6 +41,7 @@ export default {
       comrpEmail: false,
       comprPassword: false,
       comprNombre: false,
+      editando: false,
 
 
       persona: {
@@ -37,19 +49,17 @@ export default {
         email: "",
         password: "",
       },
-      personas:[],
+      personas: [],
     };
   },
   computed: {
-    mostrarBoton() {
-      return (
-        this.persona.email !== "" &&
-        this.persona.password !== "" &&
-        this.persona.nombre !== ""
-      );
-    },
+
   },
   methods: {
+    activarEdicion() {
+      this.editando = !this.editando;
+
+    },
     comprobarEmail() {
       const emailRegExr = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       this.comrpEmail = emailRegExr.test(this.persona.email);
@@ -65,7 +75,7 @@ export default {
       this.nombreValidado = true;
     },
     añadir() {
-    
+
       this.personas.push(this.persona);
       this.persona = {
         nombre: "",
@@ -73,11 +83,11 @@ export default {
         password: "",
       };
       document.getElementsByTagName("button")[0].style.display = "none";
-  
-      
+
+
     },
-    eliminar(index){
-      this.personas.splice(index,1);
+    eliminar(index) {
+      this.personas.splice(index, 1);
     }
   },
 
