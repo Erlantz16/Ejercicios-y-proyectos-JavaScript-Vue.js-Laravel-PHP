@@ -23,14 +23,13 @@ return new class extends Migration
             // onDelete restrict: si se elimina un profesor, no se eliminan sus cursos
             // onDelete no action: si se elimina un profesor, no se eliminan sus cursos
             // onDelete set default: si se elimina un profesor, se pone a default el campo profesor_id de sus cursos
-            $table->foreign('profesor_id')->references('id')->on('profesors')->onDelete('set null');
-            $table->timestamps();
+            $table->foreign('profesor_id')->references('id')->on('profesores')->onDelete('set null');
         });
     }
 
     /**
      * Reverse the migrations.
-     */
+     */ 
     public function down(): void
     {
         Schema::dropIfExists('cursos');
