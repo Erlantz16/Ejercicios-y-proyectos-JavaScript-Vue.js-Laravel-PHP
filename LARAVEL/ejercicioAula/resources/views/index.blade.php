@@ -36,7 +36,7 @@
         <td class="bordeTabla">{{$alumno->nombre_apellido}}</td>
         <td class="bordeTabla">
             @if ($alumno->foto)
-            <img src="{{(asset('images/' .$alumno->foto.''))}}" alt="images/{{url(asset($alumno->foto))}}" width="30px">
+            <td><img src="{{url('storage/imagenes/'.$alumno->foto.'')}}" alt="" style="width: 50px; height: 50px;"></td>
             @else
             <img src="{{(asset('/images/default.jpg'))}}" alt="{{$alumno->nombre_apellido}}" width="30px">
             @endif

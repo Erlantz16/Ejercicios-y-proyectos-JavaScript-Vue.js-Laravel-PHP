@@ -54,9 +54,30 @@ class Controlador extends Controller
         $alumno->direccion = $request->direccion;
 
         if ($request->hasFile('foto')) {
-            $imageName = time() . '.' . $request->foto->extension();
-            $request->foto->move(public_path('images'), $imageName);
-            $alumno->foto = $imageName;
+            $file_name = $_FILES['foto']['name'];
+
+            // Obtener el nombre del usuario (reemplaza 'nombre_de_usuario' con la lógica real para obtener el nombre del usuario)
+            $user_name = $request->nombre;
+    
+            // Obtener la extensión del archivo
+            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+    
+            // Crear un nuevo nombre para el archivo basado en el nombre del usuario
+            $new_file_name = $user_name . '.' . $file_extension;
+    
+            // Ruta del directorio donde deseas guardar el archivo
+            $upload_directory = base_path('/storage/app/public/imagenes');
+    
+            // Ruta completa del nuevo archivo
+            $new_file_path = $upload_directory.'/'.$new_file_name;
+            //mover
+            move_uploaded_file($_FILES['foto']['tmp_name'], $new_file_path);
+    
+    
+    
+            $alumno->foto = $new_file_name;
+    
+            // $alumno->save();
         }
 
         $alumno->save();
