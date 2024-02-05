@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controlador;
 use App\Http\Controllers\ProfesorControlador;
+use App\Http\Controllers\CursoControlador;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,8 @@ Route::get('profesor/create', [ProfesorControlador::class, 'create'] )->name('pr
 Route::post('/profesor/store', [ProfesorControlador::class, 'store'])->name('profesor.store');
 Route::get('profesor/edit/{id}', [ProfesorControlador::class, 'edit'] )->name('profesor.edit');
 Route::put('profesor/update/{id}', [ProfesorControlador::class, 'update'] )->name('profesor.update');
+Route::delete('/profesor/destroy/{id}', [ProfesorControlador::class, 'destroy'])->name('profesor.destroy');
+
+Route::get('/curso/index', [CursoControlador::class, 'index'])->name('curso.index');
+Route::get('curso/create', [CursoControlador::class, 'create'] )->name('curso.create');
+Route::post('/curso/store', [CursoControlador::class, 'store'])->name('curso.store');

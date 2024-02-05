@@ -1,6 +1,7 @@
 @extends('layouts.plantilla')
 @section('title', 'Edit Alumno')
 @section('content')
+
 <form method="POST" action="{{ route('alumno.update', $alumno->id) }}">
 
     @csrf

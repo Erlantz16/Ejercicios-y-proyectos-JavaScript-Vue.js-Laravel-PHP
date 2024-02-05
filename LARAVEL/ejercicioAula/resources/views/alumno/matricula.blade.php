@@ -1,3 +1,8 @@
+@extends('layouts.plantilla')
+@section('title', 'Alumnos Index')
+@section('content')
+
+@include('layouts.navigation')
 <h1>{{$alumno->nombre_apellido}} ikaslea matrikulatzeko</h1>
 <form action="{{route('alumno.alumnomatriculaupdate', $alumno)}}" method="post">
     @csrf

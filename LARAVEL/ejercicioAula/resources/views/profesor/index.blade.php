@@ -2,7 +2,12 @@
 @section('title', 'Alumnos Index')
 @section('content')
 
-{{-- @include('layouts.navigation') --}}
+@include('layouts.navigation')
+@if (isset($message))
+    <div class="alert alert-success">
+        {{ $message }}
+    </div>
+@endif
 <table>
     <tr>
         <th>Nombre</th>
@@ -29,6 +34,13 @@
 
         <td>
             <a href="{{route('profesor.edit', $profesores->id)}}">Editar</a>
+        </td>
+        <td>
+            <form method="POST" action="{{ route('profesor.destroy', $profesores->id) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('¿Estás seguro?')">Eliminar</button>
+            </form>        
         </td>
 
             

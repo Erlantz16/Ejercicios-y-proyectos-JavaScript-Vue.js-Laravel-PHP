@@ -1,0 +1,72 @@
+Crear una migración:
+
+bash
+Copy code
+php artisan make:migration nombre_de_la_migracion
+Ejecutar migraciones pendientes:
+
+bash
+Copy code
+php artisan migrate
+Crear un modelo:
+
+bash
+Copy code
+php artisan make:model NombreDelModelo
+Crear un controlador:
+
+bash
+Copy code
+php artisan make:controller NombreDelControlador
+Crear un controlador con métodos CRUD:
+
+bash
+Copy code
+php artisan make:controller NombreDelControlador --resource
+Crear un seeder:
+
+bash
+Copy code
+php artisan make:seeder NombreDelSeeder
+Ejecutar todos los seeders:
+
+bash
+Copy code
+php artisan db:seed
+Crear un nuevo middleware:
+
+bash
+Copy code
+php artisan make:middleware NombreDelMiddleware
+Refrescar la base de datos (desencadena migraciones, desencadena los seeders y limpia la caché):
+
+bash
+Copy code
+php artisan migrate:refresh --seed
+Revertir la última migración:
+
+bash
+Copy code
+php artisan migrate:rollback
+Ver todas las rutas disponibles en tu aplicación:
+
+bash
+Copy code
+php artisan route:list
+Limpiar la caché de configuración:
+
+bash
+Copy code
+php artisan config:clear
+Estos son solo algunos de los comandos más comunes que se utilizan en el desarrollo de aplicaciones Laravel. Recuerda consultar la documentación oficial de Laravel para obtener información más detallada sobre cada comando y sus opciones.
+
+
+
+User
+comando crear modelo y migracion a la vez
+ChatGPT
+En Laravel, puedes crear un modelo y su migración asociada al mismo tiempo utilizando el siguiente comando:
+
+bash
+Copy code
+php artisan make:model NombreDelModelo -m

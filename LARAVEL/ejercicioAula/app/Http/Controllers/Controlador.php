@@ -12,13 +12,21 @@ class Controlador extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $alumnos = Alumno::all();
-        $curso = Curso::all();
-        $profesor = Profesores::all();
-        return view('index', compact('alumnos', 'curso', 'profesor'));
-        
+        $cursos = Curso::all();
+        $cursoSeleccionado = $request->input('curso');
+    
+        if ($cursoSeleccionado) {
+            $alumnos = Curso::find($cursoSeleccionado)->alumnos;
+            // $curso = Curso::where('nombre', 'LIKE', "%{$cursoSeleccionado}%")->first();
+
+        } else {
+            $alumnos = Alumno::paginate(10);
+        }
+    
+        return view('index', compact('alumnos', 'cursos'));
+
     }
 
     /**
@@ -46,7 +54,7 @@ class Controlador extends Controller
         $alumno->direccion = $request->direccion;
 
         if ($request->hasFile('foto')) {
-            $imageName = time().'.'.$request->foto->extension();  
+            $imageName = time() . '.' . $request->foto->extension();
             $request->foto->move(public_path('images'), $imageName);
             $alumno->foto = $imageName;
         }
@@ -54,7 +62,6 @@ class Controlador extends Controller
         $alumno->save();
 
         return redirect()->route('index');
-    
     }
 
     /**
@@ -64,11 +71,13 @@ class Controlador extends Controller
     {
         //
     }
-    public function alumnomatricula(Alumno $alumno) {
+    public function alumnomatricula(Alumno $alumno)
+    {
         $cursos = Curso::all();
         return view("alumno.matricula", compact("alumno", "cursos"));
     }
-    public function alumnomatriculaupdate(Request $request, Alumno $alumno) {
+    public function alumnomatriculaupdate(Request $request, Alumno $alumno)
+    {
         $alumno->cursos()->sync($request->curso);
         return redirect()->route("index", $alumno);
     }
@@ -80,7 +89,6 @@ class Controlador extends Controller
     {
         $alumno = Alumno::find($id);
         return view('alumno.edit', ['alumno' => $alumno]);
-        
     }
 
     /**

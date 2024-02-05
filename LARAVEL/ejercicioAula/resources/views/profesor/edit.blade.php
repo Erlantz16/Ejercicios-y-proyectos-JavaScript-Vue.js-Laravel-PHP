@@ -1,3 +1,7 @@
+@extends('layouts.plantilla')
+@section('title', 'Edit Profesor')
+@section('content')
+@include('layouts.navigation')
 
 <form method="POST" action="{{ route('profesor.update', $profesor->id) }}" enctype="multipart/form-data">
     @csrf
@@ -18,7 +22,7 @@
     <input type="text" id="telefono" name="telefono" value="{{$profesor->telefono}}" required>
     @foreach($cursos as $curso)
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="{{ $curso->id }}" id="curso{{ $curso->id }}" name="cursos[]">
+            <input type="checkbox" name="curso[]" value="{{$curso->id}}" @if ($profesor->cursos->contains($curso->id)) checked @endif>
             <label class="form-check-label" for="curso{{ $curso->id }}">
                 {{ $curso->nombre }}
             </label>

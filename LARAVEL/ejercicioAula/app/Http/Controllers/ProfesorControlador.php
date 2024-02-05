@@ -44,7 +44,7 @@ class ProfesorControlador extends Controller
         $profesor->telefono = $request->telefono;
         $profesor->save();
         //created_at y updated_at se llenan automaticamente
-        foreach ($request->cursos as $curso_id) {
+        foreach ($request->curso as $curso_id) {
             $curso = Curso::find($curso_id);
             $curso->profesor_id = $profesor->id;
             $curso->save();
@@ -77,19 +77,21 @@ class ProfesorControlador extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $profesor = Profesores::find($id);
-        $profesor->nombreApellido = $request->nombreApellido;
-        $profesor->profesion = $request->profesion;
-        $profesor->gradoAcademico = $request->gradoAcademico;
-        $profesor->telefono = $request->telefono;
-        $profesor->save();
-        foreach ($request->cursos as $curso_id) {
+    {   $profesor = Profesores::all();
+        $profesorConcreto = Profesores::find($id);
+        $cursos = Curso::all();
+        $profesorConcreto->nombreApellido = $request->nombreApellido;
+        $profesorConcreto->profesion = $request->profesion;
+        $profesorConcreto->gradoAcademico = $request->gradoAcademico;
+        $profesorConcreto->telefono = $request->telefono;
+        $profesorConcreto->save();
+        foreach ($request->curso as $curso_id) {
             $curso = Curso::find($curso_id);
-            $curso->profesor_id = $profesor->id;
+            $curso->profesor_id = $profesorConcreto->id;
             $curso->save();
-        }        
-        return redirect()->route('profesor.index')->with('success', 'Profesor actualizado con éxito');
+        }
+        $message = 'Profesor actualizado con éxito';
+        return view('profesor.index', ['profesor' => $profesor, 'message' => $message]);
     }
 
     /**
@@ -97,6 +99,11 @@ class ProfesorControlador extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $profesorConcreto = Profesores::find($id);
+        $profesorConcreto->delete();
+        $message = 'Profesor eliminado con éxito';
+        $profesor = Profesores::all();
+
+        return view('profesor.index', ['profesor'=>$profesor,'message' => $message]);
     }
 }
