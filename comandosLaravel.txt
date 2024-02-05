@@ -70,3 +70,6 @@ En Laravel, puedes crear un modelo y su migración asociada al mismo tiempo util
 bash
 Copy code
 php artisan make:model NombreDelModelo -m
+
+crear storage links
+php artisan storage:link

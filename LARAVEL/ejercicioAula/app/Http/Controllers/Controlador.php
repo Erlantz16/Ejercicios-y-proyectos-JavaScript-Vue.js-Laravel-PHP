@@ -55,6 +55,7 @@ class Controlador extends Controller
 
         if ($request->hasFile('foto')) {
             $file_name = $_FILES['foto']['name'];
+//COMANDO STORAGE LINK php artisan storage:link
 
             // Obtener el nombre del usuario (reemplaza 'nombre_de_usuario' con la lógica real para obtener el nombre del usuario)
             $user_name = $request->nombre;
