@@ -73,3 +73,6 @@ php artisan make:model NombreDelModelo -m
 
 crear storage links
 php artisan storage:link
+
+crear request
+php artisan make:Request porejemplo StoreAlumno

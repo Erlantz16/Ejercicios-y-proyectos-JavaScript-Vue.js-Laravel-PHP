@@ -22,7 +22,7 @@ class AlumnoCursoSeeder extends Seeder
 
         $alumnos = Alumno::all();
         $cursos = Curso::all();
-
+        
         foreach ($alumnos as $alumno) {
             $alumno->cursos()->attach($cursos->random(rand(1, 3)));
         }

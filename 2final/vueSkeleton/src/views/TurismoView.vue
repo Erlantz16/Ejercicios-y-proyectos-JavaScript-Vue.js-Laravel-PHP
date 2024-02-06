@@ -70,7 +70,7 @@ export default {
             }
         }
         if(añade){
-            this.añadir(this.turismo[index])
+            this.añadir(this.turismo[index]);
         }
             // this.$store.commit('añadirFavorito', this.filteredMonth[index]);
     }

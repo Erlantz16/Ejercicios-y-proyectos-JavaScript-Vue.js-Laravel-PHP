@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAlumno;
 use Illuminate\Http\Request;
 use App\Models\Alumno;
 use App\Models\Curso;
 use App\Models\Profesores;
+
 
 class Controlador extends Controller
 {
@@ -40,18 +42,16 @@ class Controlador extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAlumno $request)
     {
-        $request->validate([
-            'nombre_apellido' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+       
 
-        $alumno = new Alumno;
-        $alumno->nombre_apellido = $request->nombre_apellido;
-        $alumno->edad = $request->edad;
-        $alumno->telefono = $request->telefono;
-        $alumno->direccion = $request->direccion;
+        // $alumno = new Alumno;
+        // $alumno->nombre_apellido = $request->nombre_apellido;
+        // $alumno->edad = $request->edad;
+        // $alumno->telefono = $request->telefono;
+        // $alumno->direccion = $request->direccion;
+        $alumno = Alumno::create($request->all());
 
         if ($request->hasFile('foto')) {
             $file_name = $_FILES['foto']['name'];
