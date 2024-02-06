@@ -75,33 +75,3 @@
 
 {{$alumnos->links()}}
 
-{{-- //controlador --}}
-{{-- 
-     public function bilatu(Request $request)
-    {
-        $canciones = Song::all();
-        $playlists = Playlist::all();
-        if ($request->has('nombre')) {
-            $canciones = Song::where('nombre', 'like', '%' . $request->nombre . '%')->get();
-        }else{
-            $canciones = Song::all();}
-        return view('bilatu', compact('canciones', 'playlists'));
-    } --}}
-    {{-- 
-<form action="{{ route('bilatu') }}" method="get">
-    <input class="borde" type="text" name="nombre" value="{{ request('search') }}">
-    <button style="background-color:green" type="submit">Bilatu</button>
-</form>
-<ul>
-  
-    @if($canciones->count())
-    @foreach ($canciones as $cancion)
-    <li class="borde">
-        <p>{{$cancion->nombre}}</p>
-        <p>{{$cancion->artista}}</p>
-        <p>Playlist{{$cancion->playlist->nombre}}</p>
-    </li>
-    @endforeach
-    @else
-    <p>Ez dira abestirik aurkitu</p>
-    @endif --}}
